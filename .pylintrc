@@ -18,9 +18,6 @@ max-parents=7
 max-attributes=10
 max-public-methods=20
 
-[TYPECHECK]
-ignore-missing-imports=yes
-
 [REPORTS]
 output-format=colorized
 reports=no

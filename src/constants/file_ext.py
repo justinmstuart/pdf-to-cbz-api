@@ -1,0 +1,2 @@
+class FileExtensions:
+    PDF = '.pdf'

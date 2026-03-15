@@ -29,8 +29,20 @@ The app will be available at `http://localhost:8000`.
 
 ## Usage
 
-Send a `POST` request to `/` with a PDF file:
+## Linting
+
+To check code style and quality, use [pylint](https://pylint.org/). The configuration is in `.pylintrc`.
+
+Install dependencies (if not already done):
 
 ```bash
-curl -X POST http://localhost:8000/ -F "file=@your-file.pdf"
+pip install -r requirements.txt
 ```
+
+Run pylint on the codebase:
+
+```bash
+pylint src
+```
+
+You can adjust linting rules in the `.pylintrc` file.

@@ -1,2 +1,2 @@
 class Blueprints:
-    PDF_TO_CBZ = 'pdf_to_cbz'
+    PDF_TO_CBZ = '/pdf-to-cbz'

@@ -1,8 +1,9 @@
 import os
 from datetime import datetime
 
-from flask import Blueprint, request
+from flask import Blueprint, request, send_file
 from werkzeug.utils import secure_filename
+from scripts.pdf_to_cbz import process_pdf_files
 
 from constants.request_methods import RequestMethods
 from constants.blueprints import Blueprints
@@ -24,8 +25,9 @@ def pdf_to_cbz():
     # 1. Get timestamp of request
     timestamp = datetime.now().isoformat()
 
-    # 1. Check if the request contains a file
-
+    # 2. Check if the request contains a file
+    print("FILES:", request.files)
+    print("CONTENT_TYPE:", request.content_type)
     if "file" not in request.files:
         return create_error_response(
             Errors.INVALID_REQUEST_NO_FILE,
@@ -33,13 +35,13 @@ def pdf_to_cbz():
         )
 
     file = request.files["file"]
-    if file.filename == '':
+    if file.filename == '' or file.filename is None:
         return create_error_response(
             Errors.INVALID_REQUEST_NO_FILE,
             ResponseStatusCodes.BAD_REQUEST
         )
 
-    # 2. Validate the file is a PDF
+    # 3. Validate the file is a PDF
     filename = secure_filename(file.filename)
     ext = os.path.splitext(filename)[1].lower()
     if ext != FileExtensions.PDF or file.mimetype != Mimetypes.PDF:
@@ -48,14 +50,41 @@ def pdf_to_cbz():
             ResponseStatusCodes.BAD_REQUEST
         )
 
-    # 3. Save file to temp directory
+    # 4. Save file to temp directory
     temp_dir = 'temp/' + timestamp
     file_path = save_file_to_directory(file, filename, temp_dir)
 
-    # 4. Convert PDF to CBZ
+    # 5. Convert PDF to CBZ
+    try:
+        process_pdf_files(temp_dir)
+    except Exception as e:
+        return create_error_response(
+            str(e),
+            ResponseStatusCodes.INTERNAL_SERVER_ERROR
+        )
 
-    # 6. Clean up temp directory
+    # 6. Get cbz file
+    cbz_file_path = os.path.splitext(file_path)[0] + '.cbz'
+    if not os.path.exists(cbz_file_path):
+        return create_error_response(
+            Errors.CONVERSION_FAILED,
+            ResponseStatusCodes.INTERNAL_SERVER_ERROR
+        )
+
+    # 7. Get file
+    cbz_filename = os.path.basename(cbz_file_path)
+
+    # 8. Create response with CBZ file
+    response = send_file(
+        os.path.abspath(cbz_file_path),
+        mimetype=Mimetypes.CBZ,
+        as_attachment=True,
+        download_name=cbz_filename
+    )
+
+
+    # 9. Clean up temp directory
     delete_directory(temp_dir)
 
-    # 7. Return CBZ file as response
-    return {'message': 'Hello, World!'}, ResponseStatusCodes.OK
+    # 10. Return CBZ file as response
+    return response

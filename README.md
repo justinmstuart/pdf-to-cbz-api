@@ -4,6 +4,26 @@ A Flask API that converts PDF files to CBZ format.
 
 ## Setup
 
+Clone the repository with submodules:
+
+```bash
+git clone --recurse-submodules git@github.com:justinmstuart/pdf-to-cbz.git
+```
+
+Or, if you've already cloned the repository:
+
+```bash
+git submodule update --init --recursive
+```
+
+To pull the latest changes from the submodule:
+
+```bash
+git submodule update --remote python-utils
+```
+
+Then install dependencies:
+
 ```bash
 python -m venv .venv
 source .venv/bin/activate

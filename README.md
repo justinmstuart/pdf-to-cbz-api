@@ -1,6 +1,10 @@
-# pdf-to-cbz
+# PDF -> CBZ API
 
 A Flask API that converts PDF files to CBZ format.
+
+## License
+
+[MIT](LICENSE)
 
 ## Setup
 
@@ -79,7 +83,7 @@ git submodule update --init --recursive
 Build the image:
 
 ```bash
-docker build -t pdf-to-cbz .
+docker build -t pdf-to-cbz-api .
 ```
 
 Run the container. `API_SECRET` is required — all other variables are optional and fall back to defaults:
@@ -93,7 +97,7 @@ docker run -p 8000:8000 \
   -e GUNICORN_WORKER_CLASS=gthread \
   -e MAX_CONTENT_LENGTH=1048576000 \
   -e MAX_FORM_MEMORY_SIZE=1048576000 \
-  pdf-to-cbz
+  pdf-to-cbz-api
 ```
 
 Or with Docker Compose. Create a `.env` file in the project root:
@@ -143,7 +147,7 @@ To check code style and quality, use [pylint](https://pylint.org/). The configur
 Install dependencies (if not already done):
 
 ```bash
-pip install -r requirements.txt
+pip install -r requirements.dev.txt
 ```
 
 Run pylint on the codebase:

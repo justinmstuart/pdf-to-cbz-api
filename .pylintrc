@@ -1,15 +1,9 @@
 [MASTER]
 ignore=venv
 init-hook=import sys, os; sys.path.insert(0, os.path.join(os.getcwd(), 'python-utils'))
-load-plugins=pylint_quotes
-
-[QUOTES]
-string-quote=single
-triple-quote=double
-docstring-quote=double
 
 [MESSAGES CONTROL]
-disable=C0114,C0115,C0116,R0903,W0703
+disable=C0114,C0115,C0116,R0903,W0703,W0621
 
 [FORMAT]
 max-line-length=100

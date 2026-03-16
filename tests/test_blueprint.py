@@ -1,6 +1,7 @@
 import io
-import pytest
 from unittest.mock import patch
+
+import pytest
 
 from constants.errors import Errors
 
@@ -58,11 +59,13 @@ def test_invalid_mimetype_returns_400(client):
 
 
 def test_conversion_exception_returns_500(client, tmp_path):
-    def fake_save(file, filename, directory):
+    def fake_save(_file, filename, _directory):
         return str(tmp_path / filename)
 
-    with patch('blueprints.pdf_to_cbz_bp.process_pdf_files', side_effect=Exception('Conversion error')), \
-         patch('blueprints.pdf_to_cbz_bp.save_file_to_directory', side_effect=fake_save):
+    with patch(
+        'blueprints.pdf_to_cbz_bp.process_pdf_files',
+        side_effect=Exception('Conversion error')
+    ), patch('blueprints.pdf_to_cbz_bp.save_file_to_directory', side_effect=fake_save):
         data = {'file': (io.BytesIO(b'%PDF fake'), 'test.pdf', 'application/pdf')}
         response = client.post(
             '/pdf-to-cbz/',
@@ -75,7 +78,7 @@ def test_conversion_exception_returns_500(client, tmp_path):
 
 
 def test_missing_cbz_after_conversion_returns_500(client, tmp_path):
-    def fake_save(file, filename, directory):
+    def fake_save(_file, filename, _directory):
         return str(tmp_path / filename)
 
     with patch('blueprints.pdf_to_cbz_bp.process_pdf_files'), \
@@ -95,7 +98,7 @@ def test_successful_conversion_returns_cbz(client, tmp_path):
     cbz_file = tmp_path / 'test.cbz'
     cbz_file.write_bytes(b'PK\x03\x04fake cbz content')
 
-    def fake_save(file, filename, directory):
+    def fake_save(_file, filename, _directory):
         return str(tmp_path / filename)
 
     with patch('blueprints.pdf_to_cbz_bp.process_pdf_files'), \

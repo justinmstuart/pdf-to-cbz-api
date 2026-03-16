@@ -27,6 +27,9 @@ README.md
 *.md
 
 # Tests
+tests/
+pytest.ini
+.coveragerc
 python-utils/tests/
 python-utils/.github/
 python-utils/pytest.ini

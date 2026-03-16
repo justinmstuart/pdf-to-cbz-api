@@ -32,7 +32,10 @@ def pdf_to_cbz():
     logger.info('1. Request received at %s', timestamp)
 
     # 2. Check if the request contains a file
-    logger.info('2. Checking request for file - files: %s, content_type: %s', request.files, request.content_type)
+    logger.info(
+        '2. Checking request for file - files: %s, content_type: %s',
+        request.files, request.content_type
+    )
     if 'file' not in request.files:
         logger.warning('2. No file in request')
         return create_error_response(
@@ -51,7 +54,10 @@ def pdf_to_cbz():
     # 3. Validate the file is a PDF
     filename = secure_filename(file.filename)
     ext = os.path.splitext(filename)[1].lower()
-    logger.info('3. Validating file - filename: %s, ext: %s, mimetype: %s', filename, ext, file.mimetype)
+    logger.info(
+        '3. Validating file - filename: %s, ext: %s, mimetype: %s',
+        filename, ext, file.mimetype
+    )
     if ext != FileExtensions.PDF or file.mimetype != Mimetypes.PDF:
         logger.warning('3. Invalid file type - ext: %s, mimetype: %s', ext, file.mimetype)
         return create_error_response(

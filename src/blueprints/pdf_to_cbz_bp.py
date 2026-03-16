@@ -13,6 +13,7 @@ from constants.file_ext import FileExtensions
 from constants.mimetype import Mimetypes
 from constants.response_status_codes import ResponseStatusCodes
 
+from middleware.auth import require_api_key
 from utils.errors import create_error_response
 from utils.files import save_file_to_directory, delete_directory
 
@@ -24,6 +25,7 @@ class Routes:
 pdf_to_cbz_bp = Blueprint(Blueprints.PDF_TO_CBZ, __name__)
 
 @pdf_to_cbz_bp.route(Routes.ROOT, methods=[RequestMethods.POST])
+@require_api_key
 def pdf_to_cbz():
     # 1. Get timestamp of request
     timestamp = datetime.now().isoformat()

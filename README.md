@@ -74,6 +74,7 @@ Send a PDF file to the API and save the response as a CBZ file:
 
 ```bash
 curl http://localhost:8000/pdf-to-cbz/ \
+  -H "Authorization: Bearer ${API_SECRET}" \
   -F "file=@/path/to/file.pdf;type=application/pdf" \
   --output file.cbz
 ```

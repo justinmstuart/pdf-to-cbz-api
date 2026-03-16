@@ -10,3 +10,4 @@ class Env:
     GUNICORN_THREADS = int(os.getenv('GUNICORN_THREADS', '4'))
     GUNICORN_TIMEOUT = int(os.getenv('GUNICORN_TIMEOUT', '120'))
     GUNICORN_WORKER_CLASS = os.getenv('GUNICORN_WORKER_CLASS', 'gthread')
+    API_SECRET = os.getenv('API_SECRET', '')

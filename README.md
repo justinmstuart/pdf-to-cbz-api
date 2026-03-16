@@ -68,6 +68,63 @@ gunicorn --config gunicorn.conf.py app:app
 
 The app will be available at `http://localhost:8000`.
 
+## Running with Docker
+
+Ensure the submodule is initialised first:
+
+```bash
+git submodule update --init --recursive
+```
+
+Build the image:
+
+```bash
+docker build -t pdf-to-cbz .
+```
+
+Run the container. `API_SECRET` is required — all other variables are optional and fall back to defaults:
+
+```bash
+docker run -p 8000:8000 \
+  -e API_SECRET=<your_secret> \
+  -e GUNICORN_WORKERS=2 \
+  -e GUNICORN_THREADS=4 \
+  -e GUNICORN_TIMEOUT=120 \
+  -e GUNICORN_WORKER_CLASS=gthread \
+  -e MAX_CONTENT_LENGTH=1048576000 \
+  -e MAX_FORM_MEMORY_SIZE=1048576000 \
+  pdf-to-cbz
+```
+
+Or with Docker Compose. Create a `.env` file in the project root:
+
+```env
+# Required
+API_SECRET=your_secret_here
+
+# Optional — these values are the defaults
+GUNICORN_WORKERS=2
+GUNICORN_THREADS=4
+GUNICORN_TIMEOUT=120
+GUNICORN_WORKER_CLASS=gthread
+MAX_CONTENT_LENGTH=1048576000
+MAX_FORM_MEMORY_SIZE=1048576000
+```
+
+Then start the service:
+
+```bash
+docker compose up
+```
+
+To run in the background:
+
+```bash
+docker compose up -d
+```
+
+The app will be available at `http://localhost:8000`.
+
 ## Usage
 
 Send a PDF file to the API and save the response as a CBZ file:

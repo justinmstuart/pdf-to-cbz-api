@@ -1,0 +1,35 @@
+# Git
+.git
+.gitmodules
+python-utils/.git
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Env / secrets
+.env
+.env.*
+
+# Temp files
+temp/
+src/temp/
+
+# Dev / editor config
+.pylintrc
+.editorconfig
+pyrightconfig.json
+requirements.dev.txt
+
+# Docs
+README.md
+*.md
+
+# Tests
+python-utils/tests/
+python-utils/.github/
+python-utils/pytest.ini
+python-utils/.coveragerc
+python-utils/.pylintrc
+python-utils/.editorconfig

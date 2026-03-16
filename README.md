@@ -1,5 +1,7 @@
 # PDF -> CBZ API
 
+[![Tests](https://github.com/justinmstuart/pdf-to-cbz-api/actions/workflows/tests.yml/badge.svg)](https://github.com/justinmstuart/pdf-to-cbz-api/actions/workflows/tests.yml)
+
 A Flask API that converts PDF files to CBZ format.
 
 ## License

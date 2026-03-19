@@ -6,7 +6,7 @@ A Flask API that converts PDF files to CBZ format.
 
 ## License
 
-[MIT](LICENSE)
+![License](https://img.shields.io/github/license/justinmstuart/pdf-to-cbz-api)
 
 ## Setup
 

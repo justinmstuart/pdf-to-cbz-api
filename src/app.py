@@ -6,6 +6,7 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'python-utils'))
 
 from flask import Flask
+from flask_cors import CORS
 
 from blueprints.pdf_to_cbz_bp import pdf_to_cbz_bp
 from constants.blueprints import Blueprints
@@ -13,6 +14,7 @@ from constants.config import ConfigKeys
 from constants.env import Env
 
 app = Flask(__name__)
+CORS(app)
 
 logging.basicConfig(
     level=logging.INFO,

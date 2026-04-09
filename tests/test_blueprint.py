@@ -118,5 +118,7 @@ def test_successful_conversion_returns_cbz(client, tmp_path):
 
 def test_cors_headers_present_on_post_endpoint(client):
     """Test that CORS headers are present on POST endpoint response."""
-    response = client.post('/pdf-to-cbz/', headers=AUTH_HEADERS)
+    headers = {**AUTH_HEADERS, 'Origin': 'http://example.com'}
+    response = client.post('/pdf-to-cbz/', headers=headers)
+    assert response.status_code == 400  # Expected: no file in request
     assert 'Access-Control-Allow-Origin' in response.headers

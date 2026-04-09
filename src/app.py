@@ -13,11 +13,27 @@ from constants.blueprints import Blueprints
 from constants.config import ConfigKeys
 from constants.env import Env
 
+
+def _get_allowed_cors_origins():
+    """
+    Get the list of allowed CORS origins from environment variable.
+    Returns None to allow all origins (*) if not configured.
+    """
+    if Env.CORS_ALLOWED_ORIGINS:
+        return [origin.strip() for origin in Env.CORS_ALLOWED_ORIGINS.split(',') if origin.strip()]
+    return None
+
+
 app = Flask(__name__)
-# Enable CORS with default settings (allows all origins).
-# For production use, consider restricting to specific origins:
-# CORS(app, origins=['https://yourdomain.com'])
-CORS(app)
+
+# Configure CORS: allows all origins by default, or specific origins from environment variable.
+# Set CORS_ALLOWED_ORIGINS environment variable to a comma-separated list of origins.
+# Example: CORS_ALLOWED_ORIGINS='https://example.com,https://app.example.com'
+allowed_origins = _get_allowed_cors_origins()
+if allowed_origins:
+    CORS(app, origins=allowed_origins)
+else:
+    CORS(app)
 
 logging.basicConfig(
     level=logging.INFO,

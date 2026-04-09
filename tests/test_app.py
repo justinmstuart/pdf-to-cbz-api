@@ -31,6 +31,6 @@ def test_cors_headers_on_preflight_request(client):
     }
     response = client.options('/pdf-to-cbz/', headers=headers)
     assert response.status_code in [200, 204]
-    assert 'Access-Control-Allow-Origin' in response.headers
-    # Flask-CORS may include these depending on the request
     # The key requirement is that Access-Control-Allow-Origin is present
+    # to confirm CORS is properly configured.
+    assert 'Access-Control-Allow-Origin' in response.headers

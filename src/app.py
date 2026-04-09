@@ -14,6 +14,9 @@ from constants.config import ConfigKeys
 from constants.env import Env
 
 app = Flask(__name__)
+# Enable CORS with default settings (allows all origins).
+# For production use, consider restricting to specific origins:
+# CORS(app, origins=['https://yourdomain.com'])
 CORS(app)
 
 logging.basicConfig(

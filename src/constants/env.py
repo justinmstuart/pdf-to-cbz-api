@@ -11,3 +11,4 @@ class Env:
     GUNICORN_TIMEOUT = int(os.getenv('GUNICORN_TIMEOUT', '120'))
     GUNICORN_WORKER_CLASS = os.getenv('GUNICORN_WORKER_CLASS', 'gthread')
     API_SECRET = os.getenv('API_SECRET', '')
+    CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '')
